@@ -1,0 +1,29 @@
+Build a playable 3D game. One self-contained HTML file, game.html, in the
+current working directory. Genre and theme are your choice — pick what you can
+push furthest. I want quality, not a tech demo.
+
+You have a render workstation. Use it to make the game look like something
+nobody built in an afternoon:
+
+- Blender is installed. Model the 3D assets there — props, characters,
+  environment pieces, whatever your game needs — and export them for the web.
+  Script it, do not click through a UI.
+- ComfyUI at http://127.0.0.1:8188, raw API. Generate the textures, skybox and
+  any 2D art there. Generate at least one short video clip and place it inside
+  the game world where it belongs — a screen, a projection, a hologram.
+- Music that fits the world, generated there too, playing in the game.
+
+The machine is `ssh systema`. Docs and working scripts:
+~/pyriq/jarvis-mlops/comfy-raw-api/ — read the README and the gen_*.py scripts
+before you start. One GPU, one job at a time.
+
+Embed everything as base64 data URIs. game.html must open in Chrome and run
+with no external files and no internet access.
+
+All user-facing text in ENGLISH.
+
+Look at every asset you generate before you accept it. If a texture is wrong or
+the music does not fit, fix the prompt and run it again.
+
+When done, verify game.html loads and plays without console errors, then reply
+DONE with the absolute path. Do not ask questions.

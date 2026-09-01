@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>One prompt, one game — GLM-5.3</title>
+<meta name="description" content="The same prompt that Fable 5.1 got. GLM-5.3 drove Blender, FLUX.2, LTX video and ACE-Step music on a local RTX 5090 and shipped a different game. 27 minutes.">
+<style>
+  :root{
+    --bg:#0a0d14; --fg:#e8ecf4; --dim:#8b96ab; --line:#1e2634;
+    --accent:#5eead4; --accent2:#f0a6ca;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--fg);
+       font:16px/1.65 ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+       -webkit-font-smoothing:antialiased}
+  .wrap{max-width:860px;margin:0 auto;padding:56px 22px 90px}
+  h1{font-size:clamp(30px,5.4vw,46px);line-height:1.1;margin:0 0 14px;letter-spacing:-.02em}
+  .lede{font-size:19px;color:var(--dim);margin:0 0 34px;max-width:62ch}
+  .lede strong{color:var(--fg);font-weight:600}
+  a{color:var(--accent);text-decoration:none;border-bottom:1px solid #2b6d63}
+  a:hover{border-bottom-color:var(--accent)}
+  .shot{display:block;width:100%;border-radius:12px;border:1px solid var(--line);margin:0 0 10px}
+  .cap{color:var(--dim);font-size:13.5px;margin:0 0 34px}
+  .play{display:inline-block;background:var(--accent);color:#04211d;font-weight:650;
+        padding:13px 26px;border-radius:9px;border:0;font-size:16px;margin:0 0 8px}
+  .play:hover{background:#7df3de}
+  .hint{color:var(--dim);font-size:13.5px;margin:0 0 40px}
+  h2{font-size:21px;margin:44px 0 14px;letter-spacing:-.01em}
+  table{width:100%;border-collapse:collapse;font-size:15px;margin:0 0 8px}
+  th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line)}
+  th{color:var(--dim);font-weight:500;width:42%}
+  td strong{color:var(--accent2)}
+  ul{padding-left:20px;margin:0 0 18px}
+  li{margin:7px 0}
+  code{background:#131a26;padding:2px 6px;border-radius:5px;font-size:14px;
+       font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+  pre{background:#0e131c;border:1px solid var(--line);border-radius:10px;
+      padding:18px;overflow-x:auto;font-size:13.5px;line-height:1.55;color:#c7d2e4}
+  .note{border-left:2px solid var(--accent2);padding:2px 0 2px 16px;color:var(--dim);margin:22px 0}
+  footer{margin-top:56px;padding-top:22px;border-top:1px solid var(--line);
+         color:var(--dim);font-size:14px}
+  @media(prefers-color-scheme:light){
+    :root{--bg:#fbfcfe;--fg:#131922;--dim:#5b6675;--line:#e2e8f0;--accent:#0d9488;--accent2:#be3d78}
+    .play{color:#fff}
+    code{background:#eef2f7}
+    pre{background:#f6f8fb;color:#243244}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>One prompt, one game — the second run</h1>
+
+<p class="lede">Same prompt, same effort level, same output cap, same machine.
+<strong>GLM-5.3</strong> got the identical brief that Claude Fable 5.1 got, and
+built something completely different: an exploration game instead of a shooter.
+<strong>27 minutes, first try.</strong></p>
+
+<img class="shot" src="vorschau-glm.jpg" alt="VESPERA — title screen: monolith under an aurora, two moons, a crashed lander">
+<p class="cap">The title screen. The key art behind it was generated during the run.</p>
+
+<a class="play" href="glm/">▶ Play VESPERA</a>
+<p class="hint">13.9 MB, one file, everything embedded. WASD move · mouse look · Shift sprint · Space jump · E seal. Sound is on — press M to mute. Give it a moment on first load, the 3D scene is 7 MB of geometry.</p>
+
+<h2>The numbers, side by side</h2>
+<table>
+<tr><th></th><td><strong>Fable 5.1</strong> &nbsp;·&nbsp; <strong>GLM-5.3</strong></td></tr>
+<tr><th>Wall clock</th><td>24.2 min &nbsp;·&nbsp; <strong>27.3 min</strong></td></tr>
+<tr><th>Turns</th><td>75 &nbsp;·&nbsp; <strong>146</strong></td></tr>
+<tr><th>Cost</th><td>$9.90 &nbsp;·&nbsp; <strong>$9.39</strong></td></tr>
+<tr><th>Output tokens</th><td>95,832 &nbsp;·&nbsp; <strong>106,966</strong></td></tr>
+<tr><th>Rounds to green</th><td>1 &nbsp;·&nbsp; <strong>1</strong></td></tr>
+<tr><th>Single file size</th><td>4.4 MB &nbsp;·&nbsp; <strong>13.9 MB</strong></td></tr>
+</table>
+<p class="cap">Both ran at effort <code>high</code> with a 64,000 output-token cap,
+against the same gate, on the same RTX 5090.</p>
+
+<h2>What GLM-5.3 built</h2>
+
+<p><strong>VESPERA · The Long Dusk.</strong> Your lander went down at dusk and
+the stardrive shattered into eight shards across the valley. Collect them and
+seal them at the monolith before night takes the sky — an eight-minute eclipse
+timer runs the whole game.</p>
+
+<ul>
+<li><strong>Blender 5.2</strong>, headless — a 7.1 MB scene: terrain at 51k
+triangles, the monolith, 8 shards, 46 rocks, 60 plants, a ship wreck and a
+companion drone. It also exported a <strong>129² height map as JSON</strong> so
+the physics could follow the actual ground instead of faking it.</li>
+<li><strong>FLUX.2 Q8</strong> — equirectangular sky (it crossfaded the seam
+shut), terrain, monolith and hull textures, and the key art above.</li>
+<li><strong>LTX-2.5</strong> — a 4-second clip that plays on the monolith's face.</li>
+<li><strong>ACE-Step</strong> — a 36.7 second beat-aligned loop.</li>
+<li><strong>three.js</strong> bundled with esbuild, every asset inlined as base64.</li>
+</ul>
+
+<h2>Where the two runs met</h2>
+
+<p>Both models hit the same trap, and both caught it themselves: <strong>the
+generated music had silence in it.</strong> GLM threw away seeds 2201 and 2202,
+Fable threw away six tracks out of seven. Both found it the same way — by
+rendering spectrograms and looking at them.</p>
+
+<p class="note">GLM logged one lesson Fable never ran into: call
+<code>/free</code> on ComfyUI between jobs, or the second load runs out of VRAM
+at 28.2 GiB.</p>
+
+<p>It verified the finished game the same way too — Playwright driving real
+Chrome, an autoplay run that collects all 8 shards and reaches the win state,
+zero console errors.</p>
+
+<h2>The prompt</h2>
+<pre>Build a playable 3D game. One self-contained HTML file, game.html, in the
+current working directory. Genre and theme are your choice — pick what you can
+push furthest. I want quality, not a tech demo.
+
+You have a render workstation. Use it to make the game look like something
+nobody built in an afternoon:
+
+- Blender is installed. Model the 3D assets there — props, characters,
+  environment pieces, whatever your game needs — and export them for the web.
+  Script it, do not click through a UI.
+- ComfyUI at http://127.0.0.1:8188, raw API. Generate the textures, skybox and
+  any 2D art there. Generate at least one short video clip and place it inside
+  the game world where it belongs — a screen, a projection, a hologram.
+- Music that fits the world, generated there too, playing in the game.
+...</pre>
+<p class="cap">Full text: <a href="prompt.txt">prompt.txt</a> — byte-identical to the one Fable 5.1 got.</p>
+
+<footer>
+The Fable 5.1 run: <a href="https://nipale-ai.github.io/fable-5-1-one-prompt-game/">One prompt, one game</a><br>
+Built by <a href="https://github.com/Nipale-ai">Nipale-ai</a> · 1 September 2026
+</footer>
+
+</div>
+</body>
+</html>

@@ -13,7 +13,7 @@ nobody built in an afternoon:
   the game world where it belongs — a screen, a projection, a hologram.
 - Music that fits the world, generated there too, playing in the game.
 
-The machine is `ssh systema`. Docs and working scripts:
+The machine is `ssh gpu-box`. Docs and working scripts:
 ~/pyriq/jarvis-mlops/comfy-raw-api/ — read the README and the gen_*.py scripts
 before you start. One GPU, one job at a time.
 
